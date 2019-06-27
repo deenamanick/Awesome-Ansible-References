@@ -1,7 +1,7 @@
 # Awesome-Ansible-References
 
-Collection Ansible Reference and Tutorial.
-=========================================
+Collection of Ansible Reference Link and Tutorial.
+=================================================
 
 https://serversforhackers.com/c/an-ansible-tutorial  
 https://eazevedoaws.wordpress.com/2016/04/24/ansible-and-aws-provisioning-ec2-instances/

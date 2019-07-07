@@ -11,3 +11,8 @@ https://opensource.com/article/17/7/automate-sysadmin-ansible
 https://github.com/Oefenweb?page=2
 http://codeheaven.io/15-things-you-should-know-about-ansible
 
+
+Create User in Ansible
+
+https://serversforhackers.com/c/create-user-in-ansible
+

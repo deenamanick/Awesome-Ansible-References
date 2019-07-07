@@ -9,4 +9,5 @@ https://thinkingeek.com/2014/05/10/create-configure-ec2-instances-rails-deployme
 https://ansible-tips-and-tricks.readthedocs.io/en/latest/ansible/commands/
 https://opensource.com/article/17/7/automate-sysadmin-ansible
 https://github.com/Oefenweb?page=2
+http://codeheaven.io/15-things-you-should-know-about-ansible/
 

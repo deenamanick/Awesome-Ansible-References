@@ -1,3 +1,7 @@
+## Collection of ansible Commands
+
+```
+
 ansible IP -m shell -a 'cat /etc/passwd | grep root'
 
 ansible ip -m copy -a "src=/etc/passwd dest=/tmp/1.txt"
@@ -430,4 +434,7 @@ ansible OSEv3 -a 'systemctl status docker' | grep Active
 
 ansible masters[0] -m fetch -a 'src=/etc/resolv.conf dest=./'
 
-ansible sindceaprhd106 -m copy -a 'src="./playbooks/whitelist.yaml" dest="/root"'
+ansible servername -m copy -a 'src="./playbooks/whitelist.yaml" dest="/root"'
+
+
+```

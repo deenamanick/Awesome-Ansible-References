@@ -436,5 +436,7 @@ ansible masters[0] -m fetch -a 'src=/etc/resolv.conf dest=./'
 
 ansible servername -m copy -a 'src="./playbooks/whitelist.yaml" dest="/root"'
 
+ansible all -m archive -a “path=/etc/origin dest=/etc/origin.certbkp_29102019.tgz”
+
 
 ```

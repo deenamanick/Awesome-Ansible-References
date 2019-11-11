@@ -438,5 +438,31 @@ ansible servername -m copy -a 'src="./playbooks/whitelist.yaml" dest="/root"'
 
 ansible all -m archive -a “path=/etc/origin dest=/etc/origin.certbkp_29102019.tgz”
 
+-------
+
+Write a playbook to install ‘zlib’ and ‘vim’ on all hosts if the file ‘/tmp/mario’ exists on the system.
+
+--
+---
+- hosts: all
+  vars:
+      mario_file: /tmp/mario
+      package_list:
+          - 'zlib' 
+          - 'vim'
+  tasks:
+      - name: Check for mario file
+        stat:
+            path: "{{ mario_file }}"
+        register: mario_f
+
+      - name: Install zlib and vim if mario file exists
+        become: "yes"
+        package:
+            name: "{{ item }}"
+            state: present
+        with_items: "{{ package_list }}"
+        when: mario_f.stat.exists
+ ---
 
 ```

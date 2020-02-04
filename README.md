@@ -22,3 +22,5 @@ Create User in Ansible
 
 https://serversforhackers.com/c/create-user-in-ansible
 
+https://oznetnerd.com/year-archive/#2018
+

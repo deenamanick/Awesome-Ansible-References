@@ -47,9 +47,19 @@ worker4
 #### Group Definitions:
 
 [workers]: All worker nodes.
+
 [web]: Contains worker2 for web tasks.
+
 [dev]: Contains worker3 for development tasks.
+
 [prod]: Contains worker4 for production tasks.
+
 Use Case:
 
+
 You can now target the web, dev, or prod groups specifically in your playbooks or ad-hoc commands.
+
+#### run playbook
+
+ansible-playbook -i inventory.ini roles-setup.yml
+

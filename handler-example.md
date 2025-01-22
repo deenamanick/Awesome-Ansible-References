@@ -76,4 +76,28 @@ Task 1: The copy task uploads the Nginx configuration file (nginx.conf) to the s
 Task 2: Installs the Nginx package using apt.
 Handler: The Restart Nginx handler restarts the Nginx service, ensuring the updated configuration is applied. It only triggers if the copy task detects a change in the configuration file.
 
+### Another Example
 
+```
+
+---
+- name: Configure SSH 
+  hosts: all
+  tasks:
+     - name: Edit SSH Configuration
+       blockinfile:
+         path: /etc/ssh/sshd_config
+         block: |
+            MaxAuthTries 4
+            Banner /etc/motd
+            X11Forwarding no
+       notify: restart ssh
+
+  handlers: 
+    - name: restart ssh
+      service:
+        name: sshd
+        state: restarted
+```
+
+Handlers are especially useful when you are editing services configurations with Ansible. That’s because you only want to restart a service when there is a change in its service configuration.

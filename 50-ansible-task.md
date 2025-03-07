@@ -742,7 +742,11 @@ http {
      roles:
        - webserver
    ```
+ 5. ** Run the playbook **
+   ```
+   ansible-playbook site.yml
 
+```
 ---
 
 ### **32. Use Handlers to Restart a Service Only When Notified**
@@ -789,11 +793,14 @@ http {
            msg: "Database password is {{ db_password }}"
    ```
 
+
+
+
 3. **Run the Playbook**:
    ```bash
    ansible-playbook playbook.yml --ask-vault-pass
    ```
-
+![image](https://github.com/user-attachments/assets/f8ec11fc-a281-4da1-a5fe-bfddf05fc876)
 ---
 
 ### **34. Use Tags to Run Specific Tasks**

@@ -22,6 +22,9 @@ This Terraform code automates the creation of a **cloud infrastructure setup on 
 
 5. **Creates a Key Pair**:  
    - Generates an SSH key pair for secure access to the EC2 instances.
+  
+6. **Setup ansible infra**:
+   - This Terraform code will set up three EC2 instances with Ansible pre-installed. The master node will act as the controller, while worker1 and worker2 will serve as hosts for running the playbook.
 
 ---
 

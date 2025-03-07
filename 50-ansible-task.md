@@ -654,27 +654,462 @@ http {
 ## **3. Advanced-Level Tasks (20 Tasks)**  
 Focus on roles, handlers, vaults, and complex workflows.
 
-### **Tasks**:
-31. Create an Ansible role to set up a web server.
-32. Use handlers to restart a service only when notified.
-33. Write a playbook to encrypt sensitive data using Ansible Vault.
-34. Use `tags` to run specific tasks in a playbook.
-35. Write a playbook to deploy a multi-tier application (e.g., web, app, and database servers).
-36. Use the `block` module to group tasks and handle errors.
-37. Write a playbook to configure a database server (e.g., MySQL or PostgreSQL).
-38. Use the `include_tasks` module to modularize your playbook.
-39. Write a playbook to configure a Docker host and deploy containers.
-40. Use the `set_fact` module to create custom facts.
-41. Write a playbook to configure a Kubernetes cluster.
-42. Use the `wait_for` module to wait for a service to start.
-43. Write a playbook to configure logging (e.g., `rsyslog`).
-44. Use the `assert` module to validate conditions.
-45. Write a playbook to configure a monitoring tool (e.g., Prometheus).
-46. Use the `slurp` module to fetch files from remote servers.
-47. Write a playbook to configure a CI/CD pipeline (e.g., Jenkins).
-48. Use the `uri` module to interact with REST APIs.
-49. Write a playbook to configure a message queue (e.g., RabbitMQ).
-50. Use the `community.general` collection to extend Ansible's functionality.
+### **Tasks**:Here’s the code and explanations for each of the tasks you mentioned. Each task is written as a separate Ansible playbook or role.
+
+---
+
+### **31. Create an Ansible Role to Set Up a Web Server**
+1. **Create the Role Structure**:
+   ```bash
+   ansible-galaxy init webserver
+   ```
+   This creates a directory structure like:
+   ```
+   webserver/
+   ├── tasks
+   │   └── main.yml
+   ├── handlers
+   │   └── main.yml
+   ├── templates
+   ├── files
+   ├── vars
+   │   └── main.yml
+   ├── defaults
+   │   └── main.yml
+   └── meta
+       └── main.yml
+   ```
+
+2. **Define Tasks** (`webserver/tasks/main.yml`):
+   ```yaml
+   ---
+   - name: Install nginx
+     apt:
+       name: nginx
+       state: present
+
+   - name: Copy nginx configuration
+     template:
+       src: nginx.conf.j2
+       dest: /etc/nginx/nginx.conf
+     notify: Restart nginx
+   ```
+
+3. **Define Handlers** (`webserver/handlers/main.yml`):
+   ```yaml
+   ---
+   - name: Restart nginx
+     service:
+       name: nginx
+       state: restarted
+   ```
+
+4. **Use the Role in a Playbook**:
+   ```yaml
+   ---
+   - name: Set up a web server
+     hosts: webservers
+     roles:
+       - webserver
+   ```
+
+---
+
+### **32. Use Handlers to Restart a Service Only When Notified**
+```yaml
+---
+- name: Restart a service when notified
+  hosts: all
+  tasks:
+    - name: Copy configuration file
+      copy:
+        src: /path/to/config.conf
+        dest: /etc/service/config.conf
+      notify: Restart service
+
+  handlers:
+    - name: Restart service
+      service:
+        name: my_service
+        state: restarted
+```
+
+---
+
+### **33. Encrypt Sensitive Data Using Ansible Vault**
+1. **Create an Encrypted File**:
+   ```bash
+   ansible-vault create secrets.yml
+   ```
+   Add sensitive data:
+   ```yaml
+   db_password: mysecretpassword
+   ```
+
+2. **Use the Encrypted File in a Playbook**:
+   ```yaml
+   ---
+   - name: Use encrypted data
+     hosts: all
+     vars_files:
+       - secrets.yml
+     tasks:
+       - name: Print secret
+         debug:
+           msg: "Database password is {{ db_password }}"
+   ```
+
+3. **Run the Playbook**:
+   ```bash
+   ansible-playbook playbook.yml --ask-vault-pass
+   ```
+
+---
+
+### **34. Use Tags to Run Specific Tasks**
+```yaml
+---
+- name: Use tags
+  hosts: all
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+      tags: install
+
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+      tags: start
+```
+
+Run tasks with a specific tag:
+```bash
+ansible-playbook playbook.yml --tags install
+```
+
+---
+
+### **35. Deploy a Multi-Tier Application**
+```yaml
+---
+- name: Deploy web tier
+  hosts: webservers
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+- name: Deploy app tier
+  hosts: appservers
+  tasks:
+    - name: Install Python
+      apt:
+        name: python3
+        state: present
+
+- name: Deploy database tier
+  hosts: dbservers
+  tasks:
+    - name: Install MySQL
+      apt:
+        name: mysql-server
+        state: present
+```
+
+---
+
+### **36. Use the `block` Module to Group Tasks and Handle Errors**
+```yaml
+---
+- name: Handle errors with block
+  hosts: all
+  tasks:
+    - block:
+        - name: Install nginx
+          apt:
+            name: nginx
+            state: present
+
+        - name: Start nginx
+          service:
+            name: nginx
+            state: started
+
+      rescue:
+        - name: Handle failure
+          debug:
+            msg: "Something went wrong!"
+```
+
+---
+
+### **37. Configure a Database Server (e.g., MySQL or PostgreSQL)**
+```yaml
+---
+- name: Configure MySQL
+  hosts: dbservers
+  become: yes
+  tasks:
+    - name: Install MySQL
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: Start MySQL
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+```
+
+---
+
+### **38. Use the `include_tasks` Module to Modularize Your Playbook**
+1. **Create a Task File** (`tasks/install_nginx.yml`):
+   ```yaml
+   ---
+   - name: Install nginx
+     apt:
+       name: nginx
+       state: present
+   ```
+
+2. **Include the Task in a Playbook**:
+   ```yaml
+   ---
+   - name: Use include_tasks
+     hosts: all
+     tasks:
+       - include_tasks: tasks/install_nginx.yml
+   ```
+
+---
+
+### **39. Configure a Docker Host and Deploy Containers**
+```yaml
+---
+- name: Configure Docker host
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Deploy a container
+      docker_container:
+        name: my_container
+        image: nginx
+        state: started
+```
+
+---
+
+### **40. Use the `set_fact` Module to Create Custom Facts**
+```yaml
+---
+- name: Use set_fact
+  hosts: all
+  tasks:
+    - name: Set a custom fact
+      set_fact:
+        my_fact: "Hello, Ansible!"
+
+    - name: Print custom fact
+      debug:
+        var: my_fact
+```
+
+---
+
+### **41. Configure a Kubernetes Cluster**
+```yaml
+---
+- name: Configure Kubernetes
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install kubeadm, kubelet, and kubectl
+      apt:
+        name:
+          - kubeadm
+          - kubelet
+          - kubectl
+        state: present
+```
+
+---
+
+### **42. Use the `wait_for` Module to Wait for a Service to Start**
+```yaml
+---
+- name: Wait for a service to start
+  hosts: all
+  tasks:
+    - name: Wait for port 80
+      wait_for:
+        port: 80
+        timeout: 60
+```
+
+---
+
+### **43. Configure Logging (e.g., `rsyslog`)**
+```yaml
+---
+- name: Configure rsyslog
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install rsyslog
+      apt:
+        name: rsyslog
+        state: present
+
+    - name: Configure rsyslog
+      template:
+        src: rsyslog.conf.j2
+        dest: /etc/rsyslog.conf
+      notify: Restart rsyslog
+
+  handlers:
+    - name: Restart rsyslog
+      service:
+        name: rsyslog
+        state: restarted
+```
+
+---
+
+### **44. Use the `assert` Module to Validate Conditions**
+```yaml
+---
+- name: Validate conditions
+  hosts: all
+  tasks:
+    - name: Check if OS is Ubuntu
+      assert:
+        that:
+          - ansible_facts['distribution'] == "Ubuntu"
+        fail_msg: "This playbook only runs on Ubuntu."
+```
+
+---
+
+### **45. Configure a Monitoring Tool (e.g., Prometheus)**
+```yaml
+---
+- name: Configure Prometheus
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install Prometheus
+      apt:
+        name: prometheus
+        state: present
+```
+
+---
+
+### **46. Use the `slurp` Module to Fetch Files from Remote Servers**
+```yaml
+---
+- name: Fetch a file
+  hosts: all
+  tasks:
+    - name: Read a file
+      slurp:
+        path: /etc/hosts
+      register: file_content
+
+    - name: Print file content
+      debug:
+        msg: "{{ file_content.content | b64decode }}"
+```
+
+---
+
+### **47. Configure a CI/CD Pipeline (e.g., Jenkins)**
+```yaml
+---
+- name: Configure Jenkins
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
+```
+
+---
+
+### **48. Use the `uri` Module to Interact with REST APIs**
+```yaml
+---
+- name: Interact with a REST API
+  hosts: all
+  tasks:
+    - name: Make a GET request
+      uri:
+        url: https://api.example.com/data
+        method: GET
+      register: response
+
+    - name: Print response
+      debug:
+        var: response.json
+```
+
+---
+
+### **49. Configure a Message Queue (e.g., RabbitMQ)**
+```yaml
+---
+- name: Configure RabbitMQ
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install RabbitMQ
+      apt:
+        name: rabbitmq-server
+        state: present
+```
+
+---
+
+### **50. Use the `community.general` Collection to Extend Ansible's Functionality**
+1. **Install the Collection**:
+   ```bash
+   ansible-galaxy collection install community.general
+   ```
+
+2. **Use a Module from the Collection**:
+   ```yaml
+   ---
+   - name: Use community.general
+     hosts: all
+     tasks:
+       - name: Use the pacman module (from community.general)
+         community.general.pacman:
+           name: vim
+           state: present
+   ```
+
+---
+
+Let me know if you need further clarification or additional examples! 🚀
 
 ---
 

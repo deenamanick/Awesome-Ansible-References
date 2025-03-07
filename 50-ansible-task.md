@@ -681,12 +681,41 @@ Focus on roles, handlers, vaults, and complex workflows.
    ```
 
 2. **Define Tasks** (`webserver/tasks/main.yml`):
+
+### (`webserver/templates/nginx.conf.j2`)
+
+```
+worker_processes auto;
+events {
+    worker_connections 1024;
+}
+http {
+    server {
+        listen 80;
+        server_name localhost;
+
+        location / {
+            root /usr/share/nginx/html;
+            index index.html;
+        }
+    }
+}
+
+```
+
    ```yaml
    ---
-   - name: Install nginx
+   - name: Install nginx on debian bases system
      apt:
        name: nginx
        state: present
+     when: ansible_os_family == "Debian"
+   - name: Install nginx on RHEL bases system
+     yum:
+        name: nginx
+        state: absent
+     when: ansible_os_family == "RedHat"
+
 
    - name: Copy nginx configuration
      template:
@@ -708,7 +737,8 @@ Focus on roles, handlers, vaults, and complex workflows.
    ```yaml
    ---
    - name: Set up a web server
-     hosts: webservers
+     hosts: all
+     become: yes
      roles:
        - webserver
    ```

@@ -1,4 +1,4 @@
-This Terraform code automates the creation of a **cloud infrastructure setup on AWS**, including a **VPC**, **subnets**, **EC2 instances**, and **networking components**. Here's a **simplified summary** for your presentation:
+This Terraform code automates the creation of a **cloud infrastructure setup on AWS**, including a **VPC**, **subnets**, **EC2 instances**, and **networking components**. Here's a **simplified summary** 
 
 ---
 

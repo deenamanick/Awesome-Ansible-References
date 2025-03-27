@@ -4,6 +4,7 @@
 sudo amazon-linux-extras enable epel -y
 sudo yum install epel-release -y
 sudo yum install -y ansible sshpass chpasswd
+sudo yum install docker
 
 # Create ubuntu user and set password on all nodes
 PASSWORD='ubuntu_password'  # Change this to your desired password

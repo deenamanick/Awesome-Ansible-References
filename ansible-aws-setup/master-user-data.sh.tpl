@@ -6,6 +6,7 @@ sleep 5
 sudo yum install epel-release -y
 sleep 5
 sudo yum install -y ansible sshpass chpasswd
+sudo yum install docker
 
 # sudo apt update
 # sudo apt install software-properties-common

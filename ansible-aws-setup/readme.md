@@ -48,4 +48,30 @@ This Terraform code automates the creation of a **cloud infrastructure setup on 
 - **Scalability**: Easily scale up or down by modifying the code.  
 - **Consistency**: Ensures the same setup every time it’s deployed.  
 
-This code is a great example of how **Terraform** can be used to manage **AWS infrastructure** in a structured and automated way! 🚀
+## How to run the code.
+
+### Install the Terraform binary in your laptop
+
+https://developer.hashicorp.com/terraform/install
+
+
+## Run the following commands
+
+```
+git clone https://github.com/deenamanick/Awesome-Ansible-References
+cd Awesome-Ansible-References/ansible-aws-setup
+terraform init
+terrafom validate
+terraform plan
+terraform apply
+
+```
+
+## Make sure you copied access and secret file from AWS account into terraform.tfvars.
+
+```
+region     = "us-east-1"
+access_key = "AKIA4QM4SYPLRNMRXXXM2"
+secret_key = "urMfhPcKyIXOX6CZjJYNLRdZ/xePWGcQQQWWfs7W"
+
+```

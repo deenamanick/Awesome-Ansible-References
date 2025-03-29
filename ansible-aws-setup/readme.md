@@ -75,3 +75,17 @@ access_key = "AKIA4QM4SYPLRNMRXXXM2"
 secret_key = "urMfhPcKyIXOX6CZjJYNLRdZ/xePWGcQQQWWfs7W"
 
 ```
+## How to login into Ansible Master server
+
+### Get the Public IP of Master server from aws console 
+
+```
+ssh ubuntu@publicip
+
+Enter the ubuntu password.
+
+cd plays
+
+run ansible command
+
+```

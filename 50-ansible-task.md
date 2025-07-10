@@ -30,6 +30,53 @@ Here are the **Ansible playbooks** for each task:
       when: ansible_os_family == "RedHat"
 ```
 
+### ✅ **Verification Tasks **
+
+1. **Check if Nginx is installed**
+
+   * Run:
+
+     ```bash
+     nginx -v
+     ```
+   * Task: Confirm the installed version of Nginx.
+
+2. **Check if the Nginx service is running**
+
+   * Run:
+
+     ```bash
+     sudo systemctl status nginx
+     ```
+   * Task: Validate that Nginx is **active (running)**.
+
+3. **Check the port Nginx is listening on**
+
+   * Run:
+
+     ```bash
+     sudo netstat -tuln | grep :80
+     ```
+ 
+4. **Check web page response**
+
+   * Run:
+
+     ```bash
+     curl http://localhost
+     ```
+   * Task: Ensure it returns the Nginx default web page.
+
+5. **Check service is enabled on boot**
+
+   * Run:
+
+     ```bash
+     sudo systemctl is-enabled nginx
+     ```
+   * Task: Verify that the Nginx service is set to start on boot.
+
+
 ---
 
 ### **2. Start and enable the `nginx` service**

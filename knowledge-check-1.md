@@ -1,6 +1,6 @@
 #  Create a bash script named adhoc-cmds.sh that will run few ad-hoc commands on your managed nodes. 
 ## Your script will accomplish the following three tasks: 
-###  1. Install nginx on worker4. 
+###  1. Install nginx on worker2
 ###  2. Displays the uptime on all the managed nodes. 
 ###  3. Create the file /tmp/hello.txt with the contents “Hello, Friend!” on worker3.
 
@@ -9,9 +9,9 @@
 
 # Define inventory and ansible user
 
-# 1. Install Python on worker4
-echo "Installing nginx on worker4..."
-ansible worker4 --m raw -a "sudo apt update && sudo apt install -y nginx" --become
+# 1. Install Python on worker2
+echo "Installing nginx on worker2..."
+ansible worker2 --m raw -a "sudo apt update && sudo apt install -y nginx" --become
 
 # 2. Display uptime on all managed nodes
 echo "Displaying uptime on all managed nodes..."

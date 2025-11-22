@@ -9,8 +9,8 @@
 
 # Define inventory and ansible user
 
-# 1. Install Python on worker1
-echo "Installing nginx on worker2..."
+# 1. Install nginx on worker1
+echo "Installing nginx on worker1..."
 ansible worker1 --m raw -a "sudo apt update && sudo apt install -y nginx" --become
 
 # 2. Display uptime on all managed nodes

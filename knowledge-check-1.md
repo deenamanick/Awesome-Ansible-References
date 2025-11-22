@@ -1,8 +1,8 @@
 #  Create a bash script named adhoc-cmds.sh that will run few ad-hoc commands on your managed nodes. 
 ## Your script will accomplish the following three tasks: 
-###  1. Install nginx on worker2
+###  1. Install nginx on worker1
 ###  2. Displays the uptime on all the managed nodes. 
-###  3. Create the file /tmp/hello.txt with the contents “Hello, Friend!” on worker3.
+###  3. Create the file /tmp/hello.txt with the contents “Hello, Friend!” on worker2.
 
 ```
 #!/bin/bash

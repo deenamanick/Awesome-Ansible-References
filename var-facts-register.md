@@ -34,8 +34,6 @@ Capturing the output of a configuration script to validate its result.
 Storing the response from an API call to configure other systems.
 
 ```
-
----
 ---
 - name: Install Node.js and Validate Installation
   hosts: all

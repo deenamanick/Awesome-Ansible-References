@@ -71,8 +71,8 @@ terraform apply
 
 ```
 region     = "us-east-1"
-access_key = "AKIA4QM4SYPLRNMRXXXM2"
-secret_key = "urMfhPcKyIXOX6CZjJYNLRdZ/xePWGcQQQWWfs7W"
+access_key = ""
+secret_key = ""
 
 ```
 ## How to login into Ansible Master server
